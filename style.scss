@@ -18,8 +18,16 @@ body {
     margin: 4px;
     border: 1px solid;
     border-radius: 3px;
-    background-color: #2e7d32;
+    background-color: hsl(123, 46%, 34%);
     color: #fff;
     text-align: center;
   }
+}
+
+.correct {
+  background-color: hsl(123, 46%, 44%) !important;
+}
+
+.incorrect {
+  background-color: hsl(4, 90%, 48%) !important;
 }

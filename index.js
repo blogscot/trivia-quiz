@@ -43,8 +43,14 @@ function ListenForUserAnswer(expected) {
 
 function handleUserAnswer({ target }, expected) {
   const answer = target.innerText
+  const choices = document.querySelectorAll('#choices > li')
+  const elem = [...choices].find(choice => choice.innerText === answer)
+
   if (answer === expected) {
     updateScore()
+    elem.classList.add('correct')
+  } else {
+    elem.classList.add('incorrect')
   }
 }
 
