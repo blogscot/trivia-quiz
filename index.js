@@ -21,9 +21,7 @@ startButton.addEventListener('click', async () => {
 })
 
 function showQuestion({ question, correct_answer, incorrect_answers }) {
-  let newQuestion = document.createElement('h1')
-  newQuestion.innerHTML = question
-  questionElement.appendChild(newQuestion)
+  questionElement.innerHTML = question
 
   const choices = [correct_answer, ...incorrect_answers]
   for (const choice of shuffle(choices)) {
@@ -34,12 +32,10 @@ function showQuestion({ question, correct_answer, incorrect_answers }) {
 }
 
 function ListenForUserAnswer(expected) {
-  const choiceElements = document.querySelectorAll('#choices')
-  choiceElements.forEach(elem =>
-    elem.addEventListener('click', e => handleUserAnswer(e, expected), {
-      once: true,
-    })
-  )
+  const choicesEl = document.querySelector('#choices')
+  choicesEl.addEventListener('click', e => handleUserAnswer(e, expected), {
+    once: true,
+  })
 }
 
 function handleUserAnswer({ target }, expected) {
