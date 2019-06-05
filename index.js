@@ -14,21 +14,18 @@ startButton.addEventListener('click', async () => {
   startButton.classList.add('hide')
 
   // Display first question
-  let questionText = questions[0].question
+  showQuestion(questions[2])
+})
+
+function showQuestion({ question, correct_answer, incorrect_answers }) {
   let newQuestion = document.createElement('h1')
-  newQuestion.innerHTML = questionText
+  newQuestion.innerHTML = question
   questionElement.appendChild(newQuestion)
 
-  // Display possible answers
-  const choices = [
-    questions[0].correct_answer,
-    ...questions[0].incorrect_answers,
-  ]
-  console.log(choices)
-
+  const choices = [correct_answer, ...incorrect_answers]
   for (const choice of shuffle(choices)) {
     let listItem = document.createElement('li')
     listItem.innerText = choice
     choicesElement.appendChild(listItem)
   }
-})
+}
