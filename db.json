@@ -1,0 +1,95 @@
+{
+  "quiz": {
+    "response_code": 0,
+    "results": [
+      {
+        "category": "Entertainment: Music",
+        "type": "multiple",
+        "difficulty": "medium",
+        "question": "The 1952 musical composition 4&#039;33&quot;, composed by prolific American composer John Cage, is mainly comprised of what sound?",
+        "correct_answer": "Silence",
+        "incorrect_answers": ["Farts", "People talking", "Cricket chirps"]
+      },
+      {
+        "category": "Entertainment: Video Games",
+        "type": "multiple",
+        "difficulty": "easy",
+        "question": "In Portal 2, how did CEO of Aperture Science, Cave Johnson, presumably die?",
+        "correct_answer": "Moon Rock Poisoning",
+        "incorrect_answers": [
+          "Accidentally sending a portal to the Moon",
+          "Slipped in the shower",
+          "Asbestos Poisoning"
+        ]
+      },
+      {
+        "category": "Entertainment: Video Games",
+        "type": "boolean",
+        "difficulty": "easy",
+        "question": "In Splatoon, the Squid Sisters are named Tako and Yaki.",
+        "correct_answer": "False",
+        "incorrect_answers": ["True"]
+      },
+      {
+        "category": "Mythology",
+        "type": "multiple",
+        "difficulty": "hard",
+        "question": "Which of the following is NOT a god in Norse Mythology.",
+        "correct_answer": "Jens",
+        "incorrect_answers": ["Loki", "Tyr", "Snotra"]
+      },
+      {
+        "category": "Geography",
+        "type": "boolean",
+        "difficulty": "medium",
+        "question": "Japan has left-hand side traffic.",
+        "correct_answer": "True",
+        "incorrect_answers": ["False"]
+      },
+      {
+        "category": "Geography",
+        "type": "multiple",
+        "difficulty": "medium",
+        "question": "In the 2016 Global Peace Index poll, out of 163 countries, what was the United States of America ranked?",
+        "correct_answer": "103",
+        "incorrect_answers": ["10", "59", "79"]
+      },
+      {
+        "category": "Entertainment: Television",
+        "type": "multiple",
+        "difficulty": "medium",
+        "question": "In Battlestar Galactica (2004), what is the name of the President of the Twelve Colonies?",
+        "correct_answer": "Laura Roslin",
+        "incorrect_answers": ["William Adama", "Tricia Helfer", "Harry Stills"]
+      },
+      {
+        "category": "Entertainment: Film",
+        "type": "multiple",
+        "difficulty": "hard",
+        "question": "Which of the following films was directed by Ivan Reitman, written by Gary Ross, featured Kevin Kline, and was released in 1993?",
+        "correct_answer": "Dave",
+        "incorrect_answers": ["John", "Will", "Carl"]
+      },
+      {
+        "category": "Entertainment: Video Games",
+        "type": "multiple",
+        "difficulty": "hard",
+        "question": "In World of Warcraft, which raid instance features a chess event?",
+        "correct_answer": "Karazhan",
+        "incorrect_answers": [
+          "Zul&#039;Aman",
+          "Blackwing Lair",
+          "Temple of Ahn&#039;Qiraj"
+        ]
+      },
+      {
+        "category": "Sports",
+        "type": "multiple",
+        "difficulty": "medium",
+        "question": "Which sport is NOT traditionally played during the Mongolian Naadam festival?",
+        "correct_answer": "American Football",
+        "incorrect_answers": ["Wrestling", "Archery", "Horse-Racing"]
+      }
+    ]
+  }
+}
