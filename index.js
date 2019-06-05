@@ -12,17 +12,31 @@ startButton.addEventListener('click', async () => {
   const response = await fetch(quizURL)
   const data = await response.json()
   const questions = data.results
+  let questionIndex = 0
 
   startButton.classList.add('hide')
 
-  const question = questions[2]
+  let question = questions[questionIndex]
   showQuestion(question)
   ListenForUserAnswer(question.correct_answer)
+
+  nextButton.addEventListener('click', () => {
+    // Clear away choices and next button
+    var choicesElems = document.querySelectorAll('#choices > li')
+    choicesElems.forEach(el => choicesElement.removeChild(el))
+    nextButton.classList.remove('show')
+
+    questionIndex++
+    if (questionIndex < questions.length) {
+      question = questions[questionIndex]
+      showQuestion(question)
+      ListenForUserAnswer(question.correct_answer)
+    }
+  })
 })
 
 function showQuestion({ question, correct_answer, incorrect_answers }) {
   questionElement.innerHTML = question
-
   const choices = [correct_answer, ...incorrect_answers]
   for (const choice of shuffle(choices)) {
     let listItem = document.createElement('li')
