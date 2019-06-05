@@ -5,6 +5,7 @@ const quizURL = 'http://localhost:3000/quiz'
 const startButton = document.querySelector('button')
 const questionElement = document.querySelector('#question')
 const choicesElement = document.querySelector('#choices')
+const scoreElement = document.querySelector('#score')
 
 startButton.addEventListener('click', async () => {
   const response = await fetch(quizURL)
@@ -13,8 +14,9 @@ startButton.addEventListener('click', async () => {
 
   startButton.classList.add('hide')
 
-  // Display first question
-  showQuestion(questions[2])
+  const question = questions[2]
+  showQuestion(question)
+  ListenForUserAnswer(question.correct_answer)
 })
 
 function showQuestion({ question, correct_answer, incorrect_answers }) {
@@ -28,4 +30,26 @@ function showQuestion({ question, correct_answer, incorrect_answers }) {
     listItem.innerText = choice
     choicesElement.appendChild(listItem)
   }
+}
+
+function ListenForUserAnswer(expected) {
+  const choiceElements = document.querySelectorAll('#choices > li')
+  choiceElements.forEach(elem => {
+    elem.addEventListener(
+      'click',
+      e => {
+        const answer = e.target.innerText
+        if (answer === expected) {
+          updateScore()
+        }
+      },
+      { once: true }
+    )
+  })
+}
+
+function updateScore() {
+  let currentScore = Number(scoreElement.innerText)
+  currentScore++
+  scoreElement.innerText = currentScore
 }
