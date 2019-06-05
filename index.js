@@ -33,19 +33,19 @@ function showQuestion({ question, correct_answer, incorrect_answers }) {
 }
 
 function ListenForUserAnswer(expected) {
-  const choiceElements = document.querySelectorAll('#choices > li')
-  choiceElements.forEach(elem => {
-    elem.addEventListener(
-      'click',
-      e => {
-        const answer = e.target.innerText
-        if (answer === expected) {
-          updateScore()
-        }
-      },
-      { once: true }
-    )
-  })
+  const choiceElements = document.querySelectorAll('#choices')
+  choiceElements.forEach(elem =>
+    elem.addEventListener('click', e => handleUserAnswer(e, expected), {
+      once: true,
+    })
+  )
+}
+
+function handleUserAnswer({ target }, expected) {
+  const answer = target.innerText
+  if (answer === expected) {
+    updateScore()
+  }
 }
 
 function updateScore() {
