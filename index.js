@@ -6,6 +6,7 @@ const startButton = document.querySelector('button')
 const questionElement = document.querySelector('#question')
 const choicesElement = document.querySelector('#choices')
 const scoreElement = document.querySelector('#score')
+const nextButton = document.querySelector('section > button')
 
 startButton.addEventListener('click', async () => {
   const response = await fetch(quizURL)
@@ -52,6 +53,7 @@ function handleUserAnswer({ target }, expected) {
   } else {
     elem.classList.add('incorrect')
   }
+  nextButton.classList.add('show')
 }
 
 function updateScore() {

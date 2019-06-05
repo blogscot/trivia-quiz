@@ -8,6 +8,16 @@ body {
   margin: 1.5rem;
 }
 
+button {
+  padding: 12px;
+  margin: 4px;
+  border: 1px solid hsl(199, 98%, 38%);
+  border-radius: 3px;
+  font-size: 14px;
+  background-color: hsl(199, 98%, 48%);
+  color: #fff;
+}
+
 #choices {
   list-style: none;
   display: flex;
@@ -16,7 +26,7 @@ body {
   li {
     padding: 12px;
     margin: 4px;
-    border: 1px solid;
+    border: 1px solid hsl(123, 46%, 24%);
     border-radius: 3px;
     background-color: hsl(123, 46%, 34%);
     color: #fff;
@@ -24,10 +34,22 @@ body {
   }
 }
 
+section > button {
+  visibility: hidden;
+}
+
+// Dynamic styles
+
 .correct {
-  background-color: hsl(123, 46%, 44%) !important;
+  background-color: hsl(123, 46%, 54%) !important;
+  border-color: hsl(123, 46%, 44%) !important;
 }
 
 .incorrect {
   background-color: hsl(4, 90%, 48%) !important;
+  border-color: hsl(4, 90%, 38%) !important;
+}
+
+.show {
+  visibility: visible !important;
 }
