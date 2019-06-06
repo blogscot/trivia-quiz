@@ -26,14 +26,19 @@ startButton.addEventListener('click', async () => {
   showQuestion(question)
   ListenForUserAnswer(question.correct_answer)
 
-  nextButton.addEventListener('click', () => {
-    // Clear away choices and next button
-    var choicesElems = document.querySelectorAll('#choices > li')
-    choicesElems.forEach(el => choicesElement.removeChild(el))
-    nextButton.classList.remove('show')
+  nextButton.addEventListener('click', async () => {
+    clearQuestion()
 
     questionIndex++
     if (questionIndex < questions.length) {
+      question = questions[questionIndex]
+      showQuestion(question)
+      ListenForUserAnswer(question.correct_answer)
+    } else {
+      console.log('next round...')
+      let data = await loadQuestions()
+      questions = data.questions
+      questionIndex = 0
       question = questions[questionIndex]
       showQuestion(question)
       ListenForUserAnswer(question.correct_answer)
@@ -47,6 +52,7 @@ async function loadQuestions() {
   try {
     const token = await getSessionToken()
     const response = await fetch(`${quizURL}&token=${token}`)
+    // const response = await fetch(`${quizURL}`)
     data = await response.json()
 
     const response_code = data.response_code
@@ -86,6 +92,12 @@ function showQuestion({ question, correct_answer, incorrect_answers }) {
     listItem.innerText = choice
     choicesElement.appendChild(listItem)
   }
+}
+
+function clearQuestion() {
+  var choicesElems = document.querySelectorAll('#choices > li')
+  choicesElems.forEach(el => choicesElement.removeChild(el))
+  nextButton.classList.remove('show')
 }
 
 function ListenForUserAnswer(expected) {
