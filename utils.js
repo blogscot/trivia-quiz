@@ -9,13 +9,9 @@ function shuffle(answers) {
   return newArray
 }
 
-function unescapeHtml(text) {
-  return String(text)
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&#039;/g, "'")
+function htmlDecode(input) {
+  var doc = new DOMParser().parseFromString(input, 'text/html')
+  return doc.documentElement.textContent
 }
 
-export { shuffle, unescapeHtml }
+export { shuffle, htmlDecode }

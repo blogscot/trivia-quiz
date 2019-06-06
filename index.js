@@ -1,4 +1,4 @@
-import { shuffle, unescapeHtml } from './utils.js'
+import { shuffle, htmlDecode } from './utils.js'
 
 const sessionTokenURL = 'https://opentdb.com/api_token.php?command=request'
 const quizURL = 'https://opentdb.com/api.php?amount=10'
@@ -85,11 +85,11 @@ async function getSessionToken() {
 }
 
 function showQuestion({ question, correct_answer, incorrect_answers }) {
-  questionElement.innerHTML = unescapeHtml(question)
+  questionElement.textContent = htmlDecode(question)
   const choices = [correct_answer, ...incorrect_answers]
   for (const choice of shuffle(choices)) {
     let listItem = document.createElement('li')
-    listItem.innerText = unescapeHtml(choice)
+    listItem.textContent = htmlDecode(choice)
     choicesElement.appendChild(listItem)
   }
 }
