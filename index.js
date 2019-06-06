@@ -1,7 +1,9 @@
 import shuffle from './utils.js'
 
-// const quizURL = 'https://opentdb.com/api.php?amount=10'
-const quizURL = 'http://localhost:3000/quiz'
+const sessionTokenURL = 'https://opentdb.com/api_token.php?command=request'
+const quizURL = 'https://opentdb.com/api.php?amount=10'
+// const sessionTokenURL = 'http://localhost:3000/session'
+// const quizURL = 'http://localhost:3000/quiz'
 const startButton = document.querySelector('button')
 const questionElement = document.querySelector('#question')
 const choicesElement = document.querySelector('#choices')
@@ -43,7 +45,8 @@ async function loadQuestions() {
   let questions, data
   let error = null
   try {
-    const response = await fetch(quizURL)
+    const token = await getSessionToken()
+    const response = await fetch(`${quizURL}&token=${token}`)
     data = await response.json()
 
     const response_code = data.response_code
@@ -57,6 +60,22 @@ async function loadQuestions() {
   } finally {
     return { questions, error }
   }
+}
+
+async function getSessionToken() {
+  const key = 'trivia-token'
+  const existingToken = sessionStorage.getItem(key)
+  if (!!existingToken) {
+    return existingToken
+  }
+  const response = await fetch(sessionTokenURL)
+  const { response_code, token } = await response.json()
+
+  if (response_code > 0) {
+    throw new Error('failed to get session token')
+  }
+  sessionStorage.setItem(key, token)
+  return token
 }
 
 function showQuestion({ question, correct_answer, incorrect_answers }) {

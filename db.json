@@ -1,4 +1,9 @@
 {
+  "session": {
+    "response_code": 0,
+    "response_message": "Token Generated Successfully!",
+    "token": "4ecca55a83bae2bd3adde45283c5f08fe92561c9d981d5f6b889394d5777a327"
+  },
   "quiz": {
     "response_code": 0,
     "results": [
