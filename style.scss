@@ -1,5 +1,5 @@
 .hide {
-  visibility: hidden;
+  display: none;
   width: 0;
   height: 0;
 }
@@ -34,8 +34,17 @@ button {
   }
 }
 
+trivia-error {
+  display: none;
+  padding: 8px;
+  background: red;
+  color: #fff;
+  text-align: center;
+  font-size: 1.4rem;
+}
+
 section > button {
-  visibility: hidden;
+  display: none;
 }
 
 // Dynamic styles
@@ -51,5 +60,5 @@ section > button {
 }
 
 .show {
-  visibility: visible !important;
+  display: block;
 }
