@@ -9,11 +9,15 @@ const scoreElement = document.querySelector('#score')
 const nextButton = document.querySelector('section > button')
 
 startButton.addEventListener('click', async () => {
-  const response = await fetch(quizURL)
-  const data = await response.json()
-  const questions = data.results
-  let questionIndex = 0
+  let { questions, error } = await loadQuestions()
+  if (!!error) {
+    const triviaError = document.querySelector('trivia-error')
+    triviaError.innerText = `Error: the server returned error: ${error}`
+    triviaError.classList.add('show')
+    return
+  }
 
+  let questionIndex = 0
   startButton.classList.add('hide')
 
   let question = questions[questionIndex]
@@ -34,6 +38,26 @@ startButton.addEventListener('click', async () => {
     }
   })
 })
+
+async function loadQuestions() {
+  let questions, data
+  let error = null
+  try {
+    const response = await fetch(quizURL)
+    data = await response.json()
+
+    const response_code = data.response_code
+    questions = data.results
+
+    if (response_code > 0) {
+      error = response_code
+    }
+  } catch (ex) {
+    error = ex.message
+  } finally {
+    return { questions, error }
+  }
+}
 
 function showQuestion({ question, correct_answer, incorrect_answers }) {
   questionElement.innerHTML = question
