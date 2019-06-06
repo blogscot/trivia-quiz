@@ -9,4 +9,13 @@ function shuffle(answers) {
   return newArray
 }
 
-export default shuffle
+function unescapeHtml(text) {
+  return String(text)
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#039;/g, "'")
+}
+
+export { shuffle, unescapeHtml }
