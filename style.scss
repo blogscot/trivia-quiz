@@ -24,6 +24,8 @@ button {
   padding-inline-start: 0;
 
   li {
+    display: flex;
+    align-items: center;
     padding: 12px;
     margin: 4px;
     border: 1px solid hsl(123, 46%, 24%);
