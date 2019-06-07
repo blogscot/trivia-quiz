@@ -10,6 +10,9 @@ const choicesElement = document.querySelector('#choices')
 const scoreElement = document.querySelector('#score')
 const nextButton = document.querySelector('section > button')
 
+let totalQuestionsAsked = 0
+scoreElement.textContent = '0 of 0'
+
 startButton.addEventListener('click', async () => {
   let { questions, error } = await loadQuestions()
   if (!!error) {
@@ -113,18 +116,22 @@ function handleUserAnswer({ target }, expected) {
   const elem = [...choices].find(choice => choice.innerText === answer)
   const rest = [...choices].filter(choice => choice.innerText !== answer)
 
+  totalQuestionsAsked++
+
   if (answer === expected) {
-    updateScore()
+    displayScore(1)
     elem.classList.add('correct')
   } else {
+    displayScore()
     elem.classList.add('incorrect')
   }
   rest.forEach(elem => elem.classList.add('ignore'))
   nextButton.classList.add('show')
 }
 
-function updateScore() {
-  let currentScore = Number(scoreElement.innerText)
-  currentScore++
-  scoreElement.innerText = currentScore
+function displayScore(points = 0) {
+  let currentScore = Number(scoreElement.innerText.split(' ')[0])
+  currentScore += points
+  let percentage = ((currentScore / totalQuestionsAsked) * 100).toFixed(0)
+  scoreElement.innerText = `${currentScore} of ${totalQuestionsAsked} (${percentage}%)`
 }
