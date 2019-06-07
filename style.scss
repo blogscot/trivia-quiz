@@ -10,6 +10,49 @@
 
 body {
   margin: 1.5rem;
+
+  @media screen and (max-width: 500px) {
+    margin: 0.6rem;
+  }
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  margin: 0 0 2rem 0;
+  border: 1px solid #ccc;
+  padding: 1rem 2rem 2rem 2rem;
+  background: #29b6f6;
+  border-radius: 5px;
+  color: white;
+
+  @media screen and (max-width: 500px) {
+    width: 100%;
+  }
+
+  label {
+    margin: 1rem 0 0.2rem 0;
+  }
+
+  input,
+  select {
+    height: 2.2rem;
+    font-size: inherit;
+    background: #fff;
+  }
+
+  input {
+    border-radius: 3px;
+  }
+
+  input[type='submit'] {
+    margin-top: 1.8rem;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
 
 button {

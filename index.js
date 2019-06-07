@@ -1,9 +1,7 @@
-import { shuffle, htmlDecode } from './utils.js'
-
-const sessionTokenURL = 'https://opentdb.com/api_token.php?command=request'
-const quizURL = 'https://opentdb.com/api.php?amount=10'
-// const sessionTokenURL = 'http://localhost:3000/session'
-// const quizURL = 'http://localhost:3000/quiz'
+// const sessionTokenURL = 'https://opentdb.com/api_token.php?command=request'
+// const quizURL = 'https://opentdb.com/api.php?amount=10'
+const sessionTokenURL = 'http://localhost:3000/session'
+const quizURL = 'http://localhost:3000/quiz'
 const startButton = document.querySelector('button')
 const questionElement = document.querySelector('#question')
 const choicesElement = document.querySelector('#choices')
@@ -49,13 +47,23 @@ startButton.addEventListener('click', async () => {
   })
 })
 
+function handleForm(e) {
+  const config = {
+    trivia_amount: document.myForm.trivia_amount.value,
+    trivia_category: document.myForm.trivia_category.value,
+    trivia_difficulty: document.myForm.trivia_difficulty.value,
+    trivia_type: document.myForm.trivia_type.value,
+  }
+  console.log(config)
+}
+
 async function loadQuestions() {
   let questions, data
   let error = null
   try {
     const token = await getSessionToken()
-    const response = await fetch(`${quizURL}&token=${token}`)
-    // const response = await fetch(`${quizURL}`)
+    // const response = await fetch(`${quizURL}&token=${token}`)
+    const response = await fetch(`${quizURL}`)
     data = await response.json()
 
     const response_code = data.response_code
@@ -134,4 +142,22 @@ function displayScore(points = 0) {
   currentScore += points
   let percentage = ((currentScore / totalQuestionsAsked) * 100).toFixed(0)
   scoreElement.innerText = `${currentScore} of ${totalQuestionsAsked} (${percentage}%)`
+}
+
+// Utils
+
+function shuffle(answers) {
+  let newArray = []
+
+  while (answers.length > 0) {
+    let randomIndex = Math.floor(Math.random() * answers.length)
+    const entry = answers.splice(randomIndex, 1)
+    newArray.push(entry)
+  }
+  return newArray
+}
+
+function htmlDecode(input) {
+  var doc = new DOMParser().parseFromString(input, 'text/html')
+  return doc.documentElement.textContent
 }
