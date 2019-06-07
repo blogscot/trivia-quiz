@@ -111,6 +111,7 @@ function handleUserAnswer({ target }, expected) {
   const answer = target.innerText
   const choices = document.querySelectorAll('#choices > li')
   const elem = [...choices].find(choice => choice.innerText === answer)
+  const rest = [...choices].filter(choice => choice.innerText !== answer)
 
   if (answer === expected) {
     updateScore()
@@ -118,6 +119,7 @@ function handleUserAnswer({ target }, expected) {
   } else {
     elem.classList.add('incorrect')
   }
+  rest.forEach(elem => elem.classList.add('ignore'))
   nextButton.classList.add('show')
 }
 
