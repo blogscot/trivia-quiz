@@ -1,7 +1,7 @@
-// const sessionTokenURL = 'https://opentdb.com/api_token.php?command=request'
-// const quizURL = 'https://opentdb.com/api.php?amount=10'
-const sessionTokenURL = 'http://localhost:3000/session'
-const quizURL = 'http://localhost:3000/quiz'
+const sessionTokenURL = 'https://opentdb.com/api_token.php?command=request'
+const quizURL = 'https://opentdb.com/api.php'
+// const sessionTokenURL = 'http://localhost:3000/session'
+// const quizURL = 'http://localhost:3000/quiz'
 const startButton = document.querySelector('button')
 const questionElement = document.querySelector('#question')
 const choicesElement = document.querySelector('#choices')
@@ -9,6 +9,7 @@ const scoreElement = document.querySelector('#score')
 const nextButton = document.querySelector('section > button')
 
 let totalQuestionsAsked = 0
+let gameOptions = ''
 scoreElement.textContent = '0 of 0'
 
 startButton.addEventListener('click', async () => {
@@ -38,6 +39,9 @@ startButton.addEventListener('click', async () => {
     } else {
       console.log('next round...')
       let data = await loadQuestions()
+      // TODO
+      // it's possible to run out of questions
+      // what to do, eh?
       questions = data.questions
       questionIndex = 0
       question = questions[questionIndex]
@@ -47,14 +51,29 @@ startButton.addEventListener('click', async () => {
   })
 })
 
-function handleForm(e) {
+function handleForm() {
+  gameOptions = encodeGameOptions()
+  console.log(quizURL + gameOptions)
+}
+
+function encodeGameOptions() {
   const config = {
     trivia_amount: document.myForm.trivia_amount.value,
     trivia_category: document.myForm.trivia_category.value,
     trivia_difficulty: document.myForm.trivia_difficulty.value,
     trivia_type: document.myForm.trivia_type.value,
   }
-  console.log(config)
+  let options = `?amount=${config.trivia_amount}`
+  if (config.trivia_category !== 'any') {
+    options += `&category=${config.trivia_category}`
+  }
+  if (config.trivia_difficulty !== 'any') {
+    options += `&difficulty=${config.trivia_difficulty}`
+  }
+  if (config.trivia_type !== 'any') {
+    options += `&type=${config.trivia_type}`
+  }
+  return options
 }
 
 async function loadQuestions() {
@@ -62,8 +81,8 @@ async function loadQuestions() {
   let error = null
   try {
     const token = await getSessionToken()
-    // const response = await fetch(`${quizURL}&token=${token}`)
-    const response = await fetch(`${quizURL}`)
+    const response = await fetch(`${quizURL}${gameOptions}&token=${token}`)
+    // const response = await fetch(`${quizURL}`)
     data = await response.json()
 
     const response_code = data.response_code
