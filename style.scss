@@ -11,10 +11,7 @@
 
 body {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   margin: 1.5rem;
-
   @media screen and (max-width: 500px) {
     margin: 0.6rem;
   }
@@ -28,6 +25,10 @@ trivia-error {
   color: #fff;
   text-align: center;
   font-size: 1.2rem;
+}
+
+#settings {
+  margin: 0 auto;
 }
 
 h1 {
@@ -94,8 +95,11 @@ button {
 
 #quiz h1 {
   margin: 3rem 0;
+  font-size: 2.3rem;
+  text-align: left;
   @media screen and (max-width: 500px) {
     font-size: 1.8rem;
+    margin-left: 0.6rem;
   }
 }
 
