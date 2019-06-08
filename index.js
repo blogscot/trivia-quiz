@@ -2,19 +2,36 @@ const sessionTokenURL = 'https://opentdb.com/api_token.php?command=request'
 const quizURL = 'https://opentdb.com/api.php'
 // const sessionTokenURL = 'http://localhost:3000/session'
 // const quizURL = 'http://localhost:3000/quiz'
-const startButton = document.querySelector('button')
+const settings = document.querySelector('#settings')
+const quiz = document.querySelector('#quiz')
 const questionElement = document.querySelector('#question')
 const choicesElement = document.querySelector('#choices')
 const scoreElement = document.querySelector('#score')
-const nextButton = document.querySelector('section > button')
+const nextButton = document.querySelector('div > button')
 
 let totalQuestionsAsked = 0
 let gameOptions = ''
 scoreElement.textContent = '0 of 0'
 
-startButton.addEventListener('click', async () => {
+async function handleForm() {
+  gameOptions = encodeGameOptions()
+
   let { questions, error } = await loadQuestions()
   if (!!error) {
+    // TODO
+    // it's possible to run out of questions
+    // what to do, eh?
+
+    // Code 0: Success Returned results successfully.
+
+    // Data Exhausted
+    // Code 1: No Results Could not return results. The API doesn't have enough questions for your query.
+    // Code 4: Token Empty Session Token has returned all possible questions for the specified query. Resetting the Token is necessary.
+
+    // Developer screwed up
+    // Code 2: Invalid Parameter Contains an invalid parameter. Arguments passed in aren't valid.
+    // Code 3: Token Not Found Session Token does not exist.
+
     const triviaError = document.querySelector('trivia-error')
     triviaError.innerText = `Error: the server returned error: ${error}`
     triviaError.classList.add('show')
@@ -22,7 +39,8 @@ startButton.addEventListener('click', async () => {
   }
 
   let questionIndex = 0
-  startButton.classList.add('hide')
+  settings.classList.add('hide')
+  quiz.classList.add('show')
 
   let question = questions[questionIndex]
   showQuestion(question)
@@ -39,9 +57,6 @@ startButton.addEventListener('click', async () => {
     } else {
       console.log('next round...')
       let data = await loadQuestions()
-      // TODO
-      // it's possible to run out of questions
-      // what to do, eh?
       questions = data.questions
       questionIndex = 0
       question = questions[questionIndex]
@@ -49,11 +64,6 @@ startButton.addEventListener('click', async () => {
       ListenForUserAnswer(question.correct_answer)
     }
   })
-})
-
-function handleForm() {
-  gameOptions = encodeGameOptions()
-  console.log(quizURL + gameOptions)
 }
 
 function encodeGameOptions() {

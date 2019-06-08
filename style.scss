@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  // border: 1px solid red;
 }
 
 .hide {
@@ -9,6 +10,9 @@
 }
 
 body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin: 1.5rem;
 
   @media screen and (max-width: 500px) {
@@ -16,10 +20,30 @@ body {
   }
 }
 
+trivia-error {
+  display: none;
+  padding: 8px;
+  margin: 8px;
+  background: red;
+  color: #fff;
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+h1 {
+  text-align: center;
+  font-size: 2.5rem;
+}
+
+p {
+  margin: 0 auto 1.5rem;
+  width: 80%;
+}
+
 form {
   display: flex;
   flex-direction: column;
-  width: 40%;
+  width: 100%;
   margin: 0 0 2rem 0;
   border: 1px solid #ccc;
   padding: 1rem 2rem 2rem 2rem;
@@ -68,6 +92,13 @@ button {
   }
 }
 
+#quiz h1 {
+  margin: 3rem 0;
+  @media screen and (max-width: 500px) {
+    font-size: 1.8rem;
+  }
+}
+
 #choices {
   list-style: none;
   display: flex;
@@ -91,17 +122,8 @@ button {
   }
 }
 
-trivia-error {
-  display: none;
-  padding: 8px;
-  margin: 8px;
-  background: red;
-  color: #fff;
-  text-align: center;
-  font-size: 1.2rem;
-}
-
-section > button {
+#quiz,
+div > button {
   display: none;
 }
 
@@ -118,7 +140,7 @@ section > button {
 }
 
 .show {
-  display: block;
+  display: block !important;
 }
 
 .ignore {
