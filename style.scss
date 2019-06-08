@@ -11,6 +11,7 @@
 
 body {
   display: flex;
+  flex-direction: column;
   margin: 1.5rem;
   @media screen and (max-width: 500px) {
     margin: 0.6rem;
@@ -25,6 +26,12 @@ trivia-error {
   color: #fff;
   text-align: center;
   font-size: 1.2rem;
+}
+
+#user-messages {
+  p {
+    text-align: justify;
+  }
 }
 
 #settings {
