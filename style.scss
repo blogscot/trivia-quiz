@@ -48,7 +48,7 @@ form {
   margin: 0 0 2rem 0;
   border: 1px solid #ccc;
   padding: 1rem 2rem 2rem 2rem;
-  background: #29b6f6;
+  background: linear-gradient(40deg, #1976d2, #2196f3, #0097a7);
   border-radius: 5px;
   color: white;
 
@@ -58,6 +58,7 @@ form {
 
   label {
     margin: 1rem 0 0.2rem 0;
+    font-size: 20px;
   }
 
   input,
@@ -68,6 +69,7 @@ form {
   }
 
   input {
+    width: 100%; // need for Firefox
     border-radius: 3px;
   }
 
@@ -115,9 +117,9 @@ button {
     align-items: center;
     padding: 12px;
     margin: 4px;
-    border: 1px solid hsl(123, 46%, 24%);
+    border: 1px solid hsl(210, 79%, 36%);
     border-radius: 3px;
-    background-color: hsl(123, 46%, 34%);
+    background-color: hsl(210, 79%, 46%);
     color: #fff;
     text-align: center;
     @media screen and (max-width: 500px) {
