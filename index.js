@@ -4,6 +4,8 @@ const quizURL = 'https://opentdb.com/api.php'
 // const quizURL = 'http://localhost:3000/quiz'
 const settings = document.querySelector('#settings')
 const quiz = document.querySelector('#quiz')
+const userMessages = document.querySelector('#user-messages')
+const triviaError = document.querySelector('trivia-error')
 const questionElement = document.querySelector('#question')
 const choicesElement = document.querySelector('#choices')
 const scoreElement = document.querySelector('#score')
@@ -32,14 +34,14 @@ async function handleForm() {
     // Code 2: Invalid Parameter Contains an invalid parameter. Arguments passed in aren't valid.
     // Code 3: Token Not Found Session Token does not exist.
 
-    const triviaError = document.querySelector('trivia-error')
-    triviaError.innerText = `Error: the server returned error: ${error}`
+    triviaError.textContent = `Error: the server returned error: ${error}`
     triviaError.classList.add('show')
     return
   }
 
   let questionIndex = 0
   settings.classList.add('hide')
+  triviaError.classList.remove('show')
   quiz.classList.add('show')
 
   let question = questions[questionIndex]
@@ -135,8 +137,8 @@ function showQuestion({ question, correct_answer, incorrect_answers }) {
 }
 
 function clearQuestion() {
-  var choicesElems = document.querySelectorAll('#choices > li')
-  choicesElems.forEach(el => choicesElement.removeChild(el))
+  var choicesEls = document.querySelectorAll('#choices > li')
+  choicesEls.forEach(el => choicesElement.removeChild(el))
   nextButton.classList.remove('show')
 }
 
@@ -148,10 +150,10 @@ function ListenForUserAnswer(expected) {
 }
 
 function handleUserAnswer({ target }, expected) {
-  const answer = target.innerText
+  const answer = target.textContent
   const choices = document.querySelectorAll('#choices > li')
-  const elem = [...choices].find(choice => choice.innerText === answer)
-  const rest = [...choices].filter(choice => choice.innerText !== answer)
+  const elem = [...choices].find(choice => choice.textContent === answer)
+  const rest = [...choices].filter(choice => choice.textContent !== answer)
 
   totalQuestionsAsked++
 
@@ -167,10 +169,10 @@ function handleUserAnswer({ target }, expected) {
 }
 
 function displayScore(points = 0) {
-  let currentScore = Number(scoreElement.innerText.split(' ')[0])
+  let currentScore = Number(scoreElement.textContent.split(' ')[0])
   currentScore += points
   let percentage = ((currentScore / totalQuestionsAsked) * 100).toFixed(0)
-  scoreElement.innerText = `${currentScore} of ${totalQuestionsAsked} (${percentage}%)`
+  scoreElement.textContent = `${currentScore} of ${totalQuestionsAsked} (${percentage}%)`
 }
 
 // Utils
