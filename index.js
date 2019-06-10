@@ -1,11 +1,11 @@
-const sessionTokenURL = 'https://opentdb.com/api_token.php?command=request'
-const quizURL = 'https://opentdb.com/api.php'
-// const sessionTokenURL = 'http://localhost:3000/session'
-// const quizURL = 'http://localhost:3000/quiz'
+// const sessionTokenURL = 'https://opentdb.com/api_token.php?command=request'
+// const quizURL = 'https://opentdb.com/api.php'
+const sessionTokenURL = 'http://localhost:3000/session'
+const quizURL = 'http://localhost:3000/quiz'
 const settings = document.querySelector('#settings')
 const quiz = document.querySelector('#quiz')
 const userMessages = document.querySelector('#user-messages')
-const triviaError = document.querySelector('trivia-error')
+const triviaMsg = document.querySelector('trivia-message')
 const questionElement = document.querySelector('#question')
 const choicesElement = document.querySelector('#choices')
 const scoreElement = document.querySelector('#score')
@@ -20,28 +20,12 @@ async function handleForm() {
 
   let { questions, error } = await loadQuestions()
   if (!!error) {
-    // TODO
-    // it's possible to run out of questions
-    // what to do, eh?
-
-    // Code 0: Success Returned results successfully.
-
-    // Data Exhausted
-    // Code 1: No Results Could not return results. The API doesn't have enough questions for your query.
-    // Code 4: Token Empty Session Token has returned all possible questions for the specified query. Resetting the Token is necessary.
-
-    // Developer screwed up
-    // Code 2: Invalid Parameter Contains an invalid parameter. Arguments passed in aren't valid.
-    // Code 3: Token Not Found Session Token does not exist.
-
-    triviaError.textContent = `Error: the server returned error: ${error}`
-    triviaError.classList.add('show')
-    return
+    return handleError(error)
   }
 
   let questionIndex = 0
   settings.classList.add('hide')
-  triviaError.classList.remove('show')
+  triviaMsg.classList.remove('show')
   quiz.classList.add('show')
 
   let question = questions[questionIndex]
@@ -93,8 +77,8 @@ async function loadQuestions() {
   let error = null
   try {
     const token = await getSessionToken()
-    const response = await fetch(`${quizURL}${gameOptions}&token=${token}`)
-    // const response = await fetch(`${quizURL}`)
+    // const response = await fetch(`${quizURL}${gameOptions}&token=${token}`)
+    const response = await fetch(`${quizURL}`)
     data = await response.json()
 
     const response_code = data.response_code
@@ -173,6 +157,25 @@ function displayScore(points = 0) {
   currentScore += points
   let percentage = ((currentScore / totalQuestionsAsked) * 100).toFixed(0)
   scoreElement.textContent = `${currentScore} of ${totalQuestionsAsked} (${percentage}%)`
+}
+
+function handleError(error) {
+  // TODO
+  // it's possible to run out of questions
+  // what to do, eh?
+
+  // Code 0: Success Returned results successfully.
+
+  // Data Exhausted
+  // Code 1: No Results Could not return results. The API doesn't have enough questions for your query.
+  // Code 4: Token Empty Session Token has returned all possible questions for the specified query. Resetting the Token is necessary.
+
+  // Developer screwed up
+  // Code 2: Invalid Parameter Contains an invalid parameter. Arguments passed in aren't valid.
+  // Code 3: Token Not Found Session Token does not exist.
+  triviaMsg.textContent = `Error: the server returned error: ${error}`
+  triviaMsg.style.setProperty('--background', 'red')
+  triviaMsg.classList.add('show')
 }
 
 // Utils

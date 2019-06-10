@@ -18,14 +18,13 @@ body {
   }
 }
 
-trivia-error {
+trivia-message {
   display: none;
-  padding: 8px;
-  margin: 8px;
-  background: red;
-  color: #fff;
-  text-align: center;
-  font-size: 1.2rem;
+  align-self: center;
+  width: 50%;
+  @media screen and (max-width: 500px) {
+    width: 100%;
+  }
 }
 
 #user-messages {
@@ -39,6 +38,9 @@ trivia-error {
 
 #settings {
   margin: 0 auto;
+  @media screen and (max-width: 500px) {
+    width: 100%;
+  }
 }
 
 h1 {
