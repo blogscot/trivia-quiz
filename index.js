@@ -1,7 +1,7 @@
-// const sessionTokenURL = 'https://opentdb.com/api_token.php?command=request'
-// const quizURL = 'https://opentdb.com/api.php'
-const sessionTokenURL = 'http://localhost:3000/session'
-const quizURL = 'http://localhost:3000/quiz'
+const sessionTokenURL = 'https://opentdb.com/api_token.php?command=request'
+const quizURL = 'https://opentdb.com/api.php'
+// const sessionTokenURL = 'http://localhost:3000/session'
+// const quizURL = 'http://localhost:3000/quiz'
 const settings = document.querySelector('#settings')
 const quiz = document.querySelector('#quiz')
 const userMessages = document.querySelector('#user-messages')
@@ -10,6 +10,7 @@ const questionElement = document.querySelector('#question')
 const choicesElement = document.querySelector('#choices')
 const scoreElement = document.querySelector('#score')
 const nextButton = document.querySelector('div > button')
+const token_key = 'trivia-token'
 
 let totalQuestionsAsked = 0
 let gameOptions = ''
@@ -21,26 +22,23 @@ async function handleForm() {
 
   let { questions, error } = await loadQuestions()
   if (!!error) {
-    return handleError(error)
+    await handleError(error)
+    return
   }
-
+  clearSettingsForm()
   let questionIndex = 0
-  clearOldMessages()
-
   let question = questions[questionIndex]
   showQuestion(question)
   ListenForUserAnswer(question.correct_answer)
 
   nextButton.addEventListener('click', async () => {
     clearQuestion()
-
     questionIndex++
     if (questionIndex < questions.length) {
       question = questions[questionIndex]
       showQuestion(question)
       ListenForUserAnswer(question.correct_answer)
     } else {
-      console.log('next round...')
       let data = await loadQuestions()
       questions = data.questions
       questionIndex = 0
@@ -76,8 +74,8 @@ async function loadQuestions() {
   let error = null
   try {
     const token = await getSessionToken()
-    // const response = await fetch(`${quizURL}${gameOptions}&token=${token}`)
-    const response = await fetch(`${quizURL}`)
+    const response = await fetch(`${quizURL}${gameOptions}&token=${token}`)
+    // const response = await fetch(`${quizURL}`)
     data = await response.json()
 
     const response_code = data.response_code
@@ -94,8 +92,7 @@ async function loadQuestions() {
 }
 
 async function getSessionToken() {
-  const key = 'trivia-token'
-  const existingToken = sessionStorage.getItem(key)
+  const existingToken = sessionStorage.getItem(token_key)
   if (!!existingToken) {
     return existingToken
   }
@@ -105,7 +102,7 @@ async function getSessionToken() {
   if (response_code > 0) {
     throw new Error('failed to get session token')
   }
-  sessionStorage.setItem(key, token)
+  sessionStorage.setItem(token_key, token)
   return token
 }
 
@@ -179,7 +176,7 @@ function displayScore(points = 0) {
 // Code 2: Invalid Parameter Contains an invalid parameter. Arguments passed in aren't valid.
 // Code 3: Token Not Found Session Token does not exist.
 // Code 4: Token Empty Session Token has returned all possible questions for the specified query. Resetting the Token is necessary.
-function handleError(error) {
+async function handleError(error) {
   const green = '#4CAF50'
   const blue = '#2196F3'
   const amber = '#ff9800'
@@ -216,9 +213,8 @@ function handleError(error) {
   triviaMsg.classList.add('show')
 }
 
-function clearOldMessages() {
+function clearSettingsForm() {
   settings.classList.add('hide')
-  // triviaMsg.classList.remove('popup-message')
   quiz.classList.add('show')
 }
 
