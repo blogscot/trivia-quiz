@@ -99,13 +99,23 @@ button {
   }
 }
 
-#quiz h1 {
-  margin: 3rem 0;
-  font-size: 2.3rem;
-  text-align: left;
-  @media screen and (max-width: 500px) {
-    font-size: 1.8rem;
-    margin-left: 0.6rem;
+#quiz {
+  div:first-of-type {
+    background-color: hsl(159, 92%, 40%);
+    padding: 1rem;
+    color: white;
+    text-align: center;
+    font-size: 1.2rem;
+    font-family: 'Times New Roman', Times, serif;
+  }
+  h1 {
+    margin: 3rem 0;
+    font-size: 2.3rem;
+    text-align: left;
+    @media screen and (max-width: 500px) {
+      font-size: 1.8rem;
+      margin-left: 0.6rem;
+    }
   }
 }
 
