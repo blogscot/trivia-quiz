@@ -169,25 +169,32 @@ function handleError(error) {
   const amber = '#ff9800'
   const red = '#f44336'
   const message = triviaMsg.querySelector('.message')
+  const setElem = (text, color = red) => {
+    triviaMsg.style.background = color
+    message.innerHTML = text
+  }
 
-  triviaMsg.style.background = red
   switch (error) {
     case 1:
-      triviaMsg.style.background = amber
-      message.innerHTML = `<strong>Warning</strong>: the API doesn't contain enough questions. Please choose again.`
+      setElem(
+        `<strong>Warning</strong>: the API doesn't contain enough questions. Please choose again.`,
+        amber
+      )
       break
     case 2:
-      message.innerHTML = `<strong>Error</strong>: request contains an invalid parameter!`
+      setElem(`<strong>Error</strong>: request contains an invalid parameter!`)
       break
     case 3:
-      message.innerHTML = `<strong>Error</strong>: token session does not exist.`
+      setElem(`<strong>Error</strong>: token session does not exist.`)
       break
     case 4:
-      triviaMsg.style.background = blue
-      message.innerHTML = `<strong>Warning</strong>: returned all possible questions for specified query. Please choose again.`
+      setElem(
+        `<strong>Warning</strong>: returned all possible questions for specified query. Please choose again.`,
+        blue
+      )
       break
     default:
-      message.innerHTML = `<strong>Error</strong>: the server returned error: ${error}`
+      setElem(`<strong>Error</strong>: the server returned error: ${error}`)
   }
   triviaMsg.classList.add('show')
 }
