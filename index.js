@@ -109,6 +109,22 @@ async function getSessionToken() {
   return token
 }
 
+async function resetSessionToken() {
+  const existingToken = sessionStorage.getItem(token_key)
+  if (!!existingToken) {
+    const resetTokenURL = `https://opentdb.com/api_token.php?command=reset&token=${token}`
+
+    const response = await fetch(resetTokenURL)
+    const { response_code, token } = await response.json()
+
+    if (response_code > 0) {
+      sessionStorage.setItem(token_key, token)
+    } else {
+      console.error('failed to reset session token:', token)
+    }
+  }
+}
+
 function showQuestion({ question, correct_answer, incorrect_answers }) {
   questionElement.textContent = htmlDecode(question)
   const choices = [correct_answer, ...incorrect_answers]
@@ -192,6 +208,7 @@ function handleError(error) {
         `<strong>Warning</strong>: returned all possible questions for specified query. Please choose again.`,
         blue
       )
+      await resetSessionToken()
       break
     default:
       setElem(`<strong>Error</strong>: the server returned error: ${error}`)
