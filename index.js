@@ -5,7 +5,7 @@ const quizURL = 'http://localhost:3000/quiz'
 const settings = document.querySelector('#settings')
 const quiz = document.querySelector('#quiz')
 const userMessages = document.querySelector('#user-messages')
-const triviaMsg = document.querySelector('trivia-message')
+const triviaMsg = document.querySelector('.alert')
 const questionElement = document.querySelector('#question')
 const choicesElement = document.querySelector('#choices')
 const scoreElement = document.querySelector('#score')
@@ -14,6 +14,7 @@ const nextButton = document.querySelector('div > button')
 let totalQuestionsAsked = 0
 let gameOptions = ''
 scoreElement.textContent = '0 of 0'
+let addedClickListener = false
 
 async function handleForm() {
   gameOptions = encodeGameOptions()
@@ -24,9 +25,7 @@ async function handleForm() {
   }
 
   let questionIndex = 0
-  settings.classList.add('hide')
-  triviaMsg.classList.remove('show')
-  quiz.classList.add('show')
+  clearOldMessages()
 
   let question = questions[questionIndex]
   showQuestion(question)
@@ -159,23 +158,44 @@ function displayScore(points = 0) {
   scoreElement.textContent = `${currentScore} of ${totalQuestionsAsked} (${percentage}%)`
 }
 
+// Code 0: Success Returned results successfully.
+// Code 1: No Results Could not return results. The API doesn't have enough questions for your query.
+// Code 2: Invalid Parameter Contains an invalid parameter. Arguments passed in aren't valid.
+// Code 3: Token Not Found Session Token does not exist.
+// Code 4: Token Empty Session Token has returned all possible questions for the specified query. Resetting the Token is necessary.
 function handleError(error) {
-  // TODO
-  // it's possible to run out of questions
-  // what to do, eh?
+  const green = '#4CAF50'
+  const blue = '#2196F3'
+  const amber = '#ff9800'
+  const red = '#f44336'
+  const message = triviaMsg.querySelector('.message')
 
-  // Code 0: Success Returned results successfully.
-
-  // Data Exhausted
-  // Code 1: No Results Could not return results. The API doesn't have enough questions for your query.
-  // Code 4: Token Empty Session Token has returned all possible questions for the specified query. Resetting the Token is necessary.
-
-  // Developer screwed up
-  // Code 2: Invalid Parameter Contains an invalid parameter. Arguments passed in aren't valid.
-  // Code 3: Token Not Found Session Token does not exist.
-  triviaMsg.textContent = `Error: the server returned error: ${error}`
-  triviaMsg.style.setProperty('--background', 'red')
+  triviaMsg.style.background = red
+  switch (error) {
+    case 1:
+      triviaMsg.style.background = amber
+      message.innerHTML = `<strong>Warning</strong>: the API doesn't contain enough questions. Please choose again.`
+      break
+    case 2:
+      message.innerHTML = `<strong>Error</strong>: request contains an invalid parameter!`
+      break
+    case 3:
+      message.innerHTML = `<strong>Error</strong>: token session does not exist.`
+      break
+    case 4:
+      triviaMsg.style.background = blue
+      message.innerHTML = `<strong>Warning</strong>: returned all possible questions for specified query. Please choose again.`
+      break
+    default:
+      message.innerHTML = `<strong>Error</strong>: the server returned error: ${error}`
+  }
   triviaMsg.classList.add('show')
+}
+
+function clearOldMessages() {
+  settings.classList.add('hide')
+  // triviaMsg.classList.remove('popup-message')
+  quiz.classList.add('show')
 }
 
 // Utils

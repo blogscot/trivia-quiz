@@ -16,15 +16,7 @@ body {
   @media screen and (max-width: 500px) {
     margin: 0.6rem;
   }
-}
-
-trivia-message {
-  display: none;
-  align-self: center;
-  width: 50%;
-  @media screen and (max-width: 500px) {
-    width: 100%;
-  }
+  margin-top: 0;
 }
 
 #user-messages {
@@ -143,6 +135,29 @@ button {
 #quiz,
 div > button {
   display: none;
+}
+
+// Alerts
+
+.alert {
+  display: none;
+  padding: 20px;
+  color: white;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
 }
 
 // Dynamic styles

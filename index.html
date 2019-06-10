@@ -9,7 +9,18 @@
     <title>Playground</title>
   </head>
   <body>
-    <trivia-message></trivia-message>
+    <div class="alert">
+      <span
+        class="closebtn"
+        onclick="this.parentElement.classList.remove('show');"
+        >&times;</span
+      >
+      <span class="message"
+        ><strong>Danger!</strong> Indicates a dangerous or potentially negative
+        action.</span
+      >
+    </div>
+
     <section id="user-messages">
       <noscript>
         <p>
@@ -93,7 +104,6 @@
         <button>Next</button>
       </div>
     </section>
-    <script src="custom.js"></script>
     <script src="index.js"></script>
   </body>
 </html>
