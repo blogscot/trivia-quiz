@@ -1,7 +1,7 @@
-// const sessionTokenURL = 'https://opentdb.com/api_token.php?command=request'
-// const quizURL = 'https://opentdb.com/api.php'
-const sessionTokenURL = 'http://localhost:3000/session'
-const quizURL = 'http://localhost:3000/quiz'
+const sessionTokenURL = 'https://opentdb.com/api_token.php?command=request'
+const quizURL = 'https://opentdb.com/api.php'
+// const sessionTokenURL = 'http://localhost:3000/session'
+// const quizURL = 'http://localhost:3000/quiz'
 const settings = document.querySelector('#settings')
 const quiz = document.querySelector('#quiz')
 const userMessages = document.querySelector('#user-messages')
@@ -79,8 +79,8 @@ async function loadQuestions() {
   let error = null
   try {
     const token = await getSessionToken()
-    // const response = await fetch(`${quizURL}${gameOptions}&token=${token}`)
-    const response = await fetch(`${quizURL}`)
+    const response = await fetch(`${quizURL}${gameOptions}&token=${token}`)
+    // const response = await fetch(`${quizURL}`)
     data = await response.json()
 
     const response_code = data.response_code
@@ -213,7 +213,7 @@ async function handleError(error) {
         blue
       )
       await resetSessionToken()
-      showSettingsForm()
+      setTimeout(showSettingsForm, 5000)
       break
     default:
       setElem(`<strong>Error</strong>: the server returned error: ${error}`)
