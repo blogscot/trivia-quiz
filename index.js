@@ -13,14 +13,12 @@ const nextButton = document.querySelector('div > button')
 const token_key = 'trivia-token'
 
 let totalQuestionsAsked = 0
-let gameOptions = ''
 scoreElement.textContent = '0 of 0'
-let addedClickListener = false
 
 async function handleForm() {
-  gameOptions = encodeGameOptions()
+  let gameOptions = encodeGameOptions()
 
-  let { questions, error } = await loadQuestions()
+  let { questions, error } = await loadQuestions(gameOptions)
   if (!!error) {
     await handleError(error)
     return
@@ -39,7 +37,7 @@ async function handleForm() {
       showQuestion(question)
       ListenForUserAnswer(question.correct_answer)
     } else {
-      data = await loadQuestions()
+      data = await loadQuestions(gameOptions)
       let error = data.error
       if (!!error) {
         await handleError(error)
@@ -74,7 +72,7 @@ function encodeGameOptions() {
   return options
 }
 
-async function loadQuestions() {
+async function loadQuestions(gameOptions) {
   let questions, data
   let error = null
   try {
