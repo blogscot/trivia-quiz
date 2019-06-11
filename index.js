@@ -1,7 +1,7 @@
-const sessionTokenURL = 'https://opentdb.com/api_token.php?command=request'
-const quizURL = 'https://opentdb.com/api.php'
-// const sessionTokenURL = 'http://localhost:3000/session'
-// const quizURL = 'http://localhost:3000/quiz'
+// const sessionTokenURL = 'https://opentdb.com/api_token.php?command=request'
+// const quizURL = 'https://opentdb.com/api.php'
+const sessionTokenURL = 'http://localhost:3000/session'
+const quizURL = 'http://localhost:3000/quiz'
 const settings = document.querySelector('#settings')
 const quiz = document.querySelector('#quiz')
 const userMessages = document.querySelector('#user-messages')
@@ -79,8 +79,8 @@ async function loadQuestions() {
   let error = null
   try {
     const token = await getSessionToken()
-    const response = await fetch(`${quizURL}${gameOptions}&token=${token}`)
-    // const response = await fetch(`${quizURL}`)
+    // const response = await fetch(`${quizURL}${gameOptions}&token=${token}`)
+    const response = await fetch(`${quizURL}`)
     data = await response.json()
 
     const response_code = data.response_code
@@ -133,12 +133,14 @@ function showQuestion({ question, correct_answer, incorrect_answers }) {
   for (const choice of shuffle(choices)) {
     let listItem = document.createElement('li')
     listItem.textContent = htmlDecode(choice)
-    choicesElement.appendChild(listItem)
+    let spanItem = document.createElement('span')
+    spanItem.appendChild(listItem)
+    choicesElement.appendChild(spanItem)
   }
 }
 
 function clearQuestion() {
-  var choicesEls = document.querySelectorAll('#choices > li')
+  var choicesEls = document.querySelectorAll('#choices > span')
   choicesEls.forEach(el => choicesElement.removeChild(el))
   nextButton.classList.remove('show')
 }
@@ -152,7 +154,7 @@ function ListenForUserAnswer(expected) {
 
 function handleUserAnswer({ target }, expected) {
   const answer = target.textContent
-  const choices = document.querySelectorAll('#choices > li')
+  const choices = document.querySelectorAll('#choices > span > li')
   const elem = [...choices].find(choice => choice.textContent === answer)
   const rest = [...choices].filter(choice => choice.textContent !== answer)
 
