@@ -35,6 +35,10 @@ p#user-messages {
 h1 {
   text-align: center;
   font-size: 2.5rem;
+
+  &:hover {
+    color: gold;
+    transition: all 0.3s ease-in-out;
 }
 
 p {
@@ -79,6 +83,8 @@ form {
 
     &:hover {
       cursor: pointer;
+      color: hsl(51, 100%, 40%);
+      transition: all 0.2s ease-in-out;
     }
   }
 }
