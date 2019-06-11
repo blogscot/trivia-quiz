@@ -126,6 +126,9 @@ button {
 #choices {
   list-style: none;
   display: inline-flex;
+  @media screen and (max-width: 500px) {
+    display: flex;
+  }
   padding-inline-start: 0;
   @media screen and (max-width: 500px) {
     flex-direction: column;
