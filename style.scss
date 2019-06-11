@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  border: 1px solid red;
 }
 
 .hide {
@@ -39,6 +40,7 @@ h1 {
   &:hover {
     color: gold;
     transition: all 0.3s ease-in-out;
+  }
 }
 
 p {
@@ -124,7 +126,7 @@ button {
 
 #choices {
   list-style: none;
-  display: flex;
+  display: inline-flex;
   padding-inline-start: 0;
   @media screen and (max-width: 500px) {
     flex-direction: column;
