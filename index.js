@@ -39,7 +39,12 @@ async function handleForm() {
       showQuestion(question)
       ListenForUserAnswer(question.correct_answer)
     } else {
-      let data = await loadQuestions()
+      data = await loadQuestions()
+      let error = data.error
+      if (!!error) {
+        await handleError(error)
+        return
+      }
       questions = data.questions
       questionIndex = 0
       question = questions[questionIndex]
@@ -109,15 +114,15 @@ async function getSessionToken() {
 async function resetSessionToken() {
   const existingToken = sessionStorage.getItem(token_key)
   if (!!existingToken) {
-    const resetTokenURL = `https://opentdb.com/api_token.php?command=reset&token=${token}`
+    const resetTokenURL = `https://opentdb.com/api_token.php?command=reset&token=${existingToken}`
 
     const response = await fetch(resetTokenURL)
     const { response_code, token } = await response.json()
 
-    if (response_code > 0) {
+    if (response_code === 0) {
       sessionStorage.setItem(token_key, token)
     } else {
-      console.error('failed to reset session token:', token)
+      console.error('failed to reset session token:', response_code)
     }
   }
 }
@@ -206,11 +211,17 @@ async function handleError(error) {
         blue
       )
       await resetSessionToken()
+      showSettingsForm()
       break
     default:
       setElem(`<strong>Error</strong>: the server returned error: ${error}`)
   }
   triviaMsg.classList.add('show')
+}
+
+function showSettingsForm() {
+  settings.classList.remove('hide')
+  quiz.classList.remove('show')
 }
 
 function clearSettingsForm() {
