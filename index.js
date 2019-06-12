@@ -126,6 +126,7 @@ async function resetSessionToken() {
 }
 
 function showQuestion({ question, correct_answer, incorrect_answers }) {
+  quiz.classList.remove('spinner')
   questionElement.textContent = htmlDecode(question)
   const choices = [correct_answer, ...incorrect_answers]
   for (const choice of shuffle(choices)) {
@@ -142,6 +143,7 @@ function clearQuestion() {
   var choicesEls = document.querySelectorAll('#choices > span')
   choicesEls.forEach(el => choicesElement.removeChild(el))
   nextButton.classList.remove('show')
+  quiz.classList.add('spinner')
 }
 
 function ListenForUserAnswer(expected) {
