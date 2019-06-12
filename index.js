@@ -138,6 +138,7 @@ function showQuestion({ question, correct_answer, incorrect_answers }) {
 }
 
 function clearQuestion() {
+  questionElement.textContent = ''
   var choicesEls = document.querySelectorAll('#choices > span')
   choicesEls.forEach(el => choicesElement.removeChild(el))
   nextButton.classList.remove('show')
